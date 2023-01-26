@@ -1,2 +1,4 @@
 .idea/
 /starter_code/target/
+# ignore compiled class files
+*.class

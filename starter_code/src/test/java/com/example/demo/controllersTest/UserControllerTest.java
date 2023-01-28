@@ -46,4 +46,17 @@ public class UserControllerTest {
         assertEquals("testUser", u.getUsername());
         assertEquals("hashedPassword", u.getPassword());
     }
+
+    @Test
+    public void createUserErrorTest() {
+        CreateUserRequest request = new CreateUserRequest();
+        request.setUsername("testUser");
+        request.setPassword("testPassword");
+        request.setConfirmPassword("test");
+        ResponseEntity<User> response = userController.createUser(request);
+        assertNotNull(response);
+        assertEquals(400, response.getStatusCodeValue());
+    }
+
+
 }

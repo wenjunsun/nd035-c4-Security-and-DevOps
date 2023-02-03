@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
+import static com.example.demo.TestUtils.getTestUser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
@@ -84,15 +85,6 @@ public class UserControllerTest {
         assertEquals(1, userFound.getId());
         assertEquals("testUser", userFound.getUsername());
         assertEquals("testPassword", userFound.getPassword());
-    }
-
-    // return an example user object for use in our unit tests.
-    private User getTestUser() {
-        User testUser = new User();
-        testUser.setId(1);
-        testUser.setUsername("testUser");
-        testUser.setPassword("testPassword");
-        return testUser;
     }
 
 }

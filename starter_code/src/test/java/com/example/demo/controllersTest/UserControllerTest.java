@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
@@ -58,5 +60,39 @@ public class UserControllerTest {
         assertEquals(400, response.getStatusCodeValue());
     }
 
+    @Test
+    public void findByUserNameTest() {
+        User testUser = getTestUser();
+        when(userRepo.findByUsername("testUser")).thenReturn(testUser);
+        ResponseEntity<User> response = userController.findByUserName("testUser");
+        assertEquals(200, response.getStatusCodeValue());
+        User userFound = response.getBody();
+        assertNotNull(userFound);
+        assertEquals(1, userFound.getId());
+        assertEquals("testUser", userFound.getUsername());
+        assertEquals("testPassword", userFound.getPassword());
+    }
+
+    @Test
+    public void findByIdTest() {
+        User testUser = getTestUser();
+        when(userRepo.findById(1L)).thenReturn(Optional.of(testUser));
+        ResponseEntity<User> response = userController.findById(1L);
+        assertEquals(200, response.getStatusCodeValue());
+        User userFound = response.getBody();
+        assertNotNull(userFound);
+        assertEquals(1, userFound.getId());
+        assertEquals("testUser", userFound.getUsername());
+        assertEquals("testPassword", userFound.getPassword());
+    }
+
+    // return an example user object for use in our unit tests.
+    private User getTestUser() {
+        User testUser = new User();
+        testUser.setId(1);
+        testUser.setUsername("testUser");
+        testUser.setPassword("testPassword");
+        return testUser;
+    }
 
 }
